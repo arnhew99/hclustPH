@@ -1,0 +1,12 @@
+Package: hclustPH
+Type: Package
+Title: Single linkage clustering using persistent homology
+Version: 0.1
+Date: 2015-09-10
+Author: Matt Arnold
+Maintainer: <arnhew99.github@outlook.com>
+Description: Single linkage clustering using persistent homology
+License: GPL-3
+Depends: geometry
+NeedsCompilation: no
+ByteCompile: yes
