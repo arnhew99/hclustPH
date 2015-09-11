@@ -7,7 +7,7 @@ hclustPH <- function(Z) {
 	triang <- delaunayn(Z, options="Qt Pp")
 	
 	# need vertices small to large
-	triang <- apply(triang,1,sort)
+	triang <- apply(triang,1,sort.int)
 	
 	# extract some guesses
 	edges <- matrix(as.vector(apply(triang,2,function(x) combn(x,2))),ncol=2,byrow=TRUE)
@@ -28,7 +28,7 @@ hclustPH <- function(Z) {
 	edges <- edges[ds.order,]
 	
 
-	simplices <- lapply(1:(dim(edges)[1]), function(i) return(edges[i,]))
+	simplices <- lapply(1:n.edges, function(i) return(as.integer(edges[i,])))
 
 	# function that returns the lowest 1 (highest number) in a simplex
 	top <- function(vec) {
