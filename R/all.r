@@ -37,7 +37,7 @@ hclustPH <- function(Z) {
 
 	
 	# initialise
-	top.simplexes <- sapply(simplices,top)
+	top.simplexes <- unlist(lapply(simplices,top))
 	
 	
 	# add two vectors together mod 2
@@ -59,7 +59,7 @@ hclustPH <- function(Z) {
 		# put the solutions back in the correct place 
 		simplices[reps] <- replacement
 		
-		top.simplexes[reps] <- sapply(replacement, top)
+		top.simplexes[reps] <- unlist(lapply(replacement, top))
 		dups <- duplicated(top.simplexes,incomparables=-1)
 	}
 	
