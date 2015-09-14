@@ -108,7 +108,7 @@ makeHclustMerge <- function(reduction,n) {
 	ia <- left
 	ia[dups] <- rev(mapply(recurseSearch, x=rev(left[dups]), i=rev((1:(n-1))[dups]), MoreArgs=list(l=left, r=right)))
 
-	hcass <- .Fortran(stats:::C_hcass2, n = n, ia = as.integer(c(ia,0)), ib = as.integer(c(right,0)), order = integer(n), iia = integer(n), iib = integer(n))
+	hcass <- .Fortran("hcass2", n = n, ia = as.integer(c(ia,0)), ib = as.integer(c(right,0)), order = integer(n), iia = integer(n), iib = integer(n))
 	
 	return(hcass)
 
