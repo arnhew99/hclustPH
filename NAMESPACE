@@ -1,3 +1,4 @@
+useDynLib(hclustPH)
 export(hclustPH)
 importFrom(geometry, delaunayn)
-useDynLib(hclustPH)
+importFrom(Rcpp, sourceCpp, evalCpp)

@@ -52,10 +52,10 @@ hclustPH <- function(Z) {
 	top.simplexes <- unlist(lapply(simplices,top))
 	
 	
-	# add two vectors together mod 2
-	add.simplices <- function(x,y) {
-		c(x,y)[!c(match(x,y,0L),match(y,x,0L))]
-	}
+	# # add two vectors together mod 2
+	# add.simplices <- function(x,y) {
+		# c(x,y)[!c(match(x,y,0L),match(y,x,0L))]
+	# }
 	
 	
 	
@@ -68,7 +68,7 @@ hclustPH <- function(Z) {
 		reps <- indexvec[dups]
 		
 		# solve the addition
-		replacement <- mapply(add.simplices,simplices[reps],simplices[adds],SIMPLIFY=FALSE)
+		replacement <- mapply(addSimplices,simplices[reps],simplices[adds],SIMPLIFY=FALSE)
 				
 		# put the solutions back in the correct place 
 		simplices[reps] <- replacement
