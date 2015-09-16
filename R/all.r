@@ -91,8 +91,19 @@ hclustPH <- function(Z) {
 	left <- as.integer(Y[1,])
 	right <- as.integer(Y[2,])
 	
-	
+	# in the stats:::hclust Fortran routines, an intermediate form of the
+	# clustering result is formed by the "HCLUST" function, which is then
+	# converted into the output form by "HCASS2", which is what plot.hclust
+	# expects. This function turns our reduced form into the intermediate 
+	# form that would come from HCLUST, and then uses the hclustPH copy of 
+	# the HCASS2 Fortran code to convert this into the output form.
 	ia <- hclustIntermediate(left, right)
+	
+	
+	# hcass2 is a copy of the Fortran routine from the base package "stats"
+	# it outputs an ordering of the leaves in the plot so that tree branches
+	# don't overlap, which is the "order" output, and a different description
+	# of the sequence of merges which is used by the plot.hclust() method
 	hcass <- .Fortran("hcass2", n = n.vertices, ia = as.integer(c(ia,0)), ib = as.integer(c(right,0)), order = integer(n.vertices), iia = integer(n.vertices), iib = integer(n.vertices))
 	
 	
@@ -117,41 +128,3 @@ hclustPH <- function(Z) {
 	return(hc)
 
 }
-
-makeHclustMerge <- function(reduction,n) {
-
-	# in the stats:::hclust Fortran routines, an intermediate form of the
-	# clustering result is formed by the "HCLUST" function, which is then
-	# converted into the output form by "HCASS2", which is what plot.hclust
-	# expects. This function turns our reduced form into the intermediate 
-	# form that would come from HCLUST, and then uses the hclustPH copy of 
-	# the HCASS2 Fortran code to convert this into the output form.
-	
-	Z <- matrix(unlist(reduction), nrow=2)
-	Y <- apply(Z,2,sort.int)
-	
-	left <- as.integer(Y[1,])
-	right <- as.integer(Y[2,])
-	
-	recurseSearch <- function(x, i, l, r) {
-
-		nexti <- which(r[1:(i-1)]==x)
-		nextx <- l[nexti]
-		if (length(nexti) == 0) return(x) else return(recurseSearch(nextx, i, l, r))
-	}
-	
-	
-	dups <- duplicated(as.vector(Y, mode="integer"))[seq(1,2*n-2,by=2)]
-	ia <- left
-	ia[dups] <- rev(mapply(recurseSearch, x=rev(left[dups]), i=rev((1:(n-1))[dups]), MoreArgs=list(l=left, r=right)))
-	
-	# hcass2 is a copy of the Fortran routine from the base package "stats"
-	# it outputs an ordering of the leaves in the plot so that tree branches
-	# don't overlap, which is the "order" output, and a different description
-	# of the sequence of merges which is used by the plot.hclust() method
-	hcass <- .Fortran("hcass2", n = n, ia = as.integer(c(ia,0)), ib = as.integer(c(right,0)), order = integer(n), iia = integer(n), iib = integer(n))
-	
-	return(hcass)
-
-}
-
