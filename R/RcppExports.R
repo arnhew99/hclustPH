@@ -5,3 +5,7 @@ addSimplices <- function(x, y) {
     .Call('hclustPH_addSimplices', PACKAGE = 'hclustPH', x, y)
 }
 
+hclustIntermediate <- function(l, r) {
+    .Call('hclustPH_hclustIntermediate', PACKAGE = 'hclustPH', l, r)
+}
+

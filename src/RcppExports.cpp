@@ -17,3 +17,15 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// hclustIntermediate
+IntegerVector hclustIntermediate(IntegerVector l, IntegerVector r);
+RcppExport SEXP hclustPH_hclustIntermediate(SEXP lSEXP, SEXP rSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< IntegerVector >::type l(lSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type r(rSEXP);
+    __result = Rcpp::wrap(hclustIntermediate(l, r));
+    return __result;
+END_RCPP
+}

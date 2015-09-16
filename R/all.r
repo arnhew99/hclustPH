@@ -83,8 +83,17 @@ hclustPH <- function(Z) {
 	
 	# the reduced form needs forcing into the right format so that we can plot it
 	# using the generic plot.hclust() method
-	hcass <- makeHclustMerge(reduction=simplices, n=n.vertices)
+	# hcass <- makeHclustMerge(reduction=simplices, n=n.vertices)
 	
+	Y <- matrix(unlist(simplices), nrow=2)
+	Y <- apply(Y,2,sort.int)
+	
+	left <- as.integer(Y[1,])
+	right <- as.integer(Y[2,])
+	
+	
+	ia <- hclustIntermediate(left, right)
+	hcass <- .Fortran("hcass2", n = n.vertices, ia = as.integer(c(ia,0)), ib = as.integer(c(right,0)), order = integer(n.vertices), iia = integer(n.vertices), iib = integer(n.vertices))
 	
 	
 	# compute the hierachical clustering "heights", which are the birth times of any 
