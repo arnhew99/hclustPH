@@ -9,3 +9,7 @@ hclustIntermediate <- function(l, r) {
     .Call('hclustPH_hclustIntermediate', PACKAGE = 'hclustPH', l, r)
 }
 
+topsimps <- function(simplist) {
+    .Call('hclustPH_topsimps', PACKAGE = 'hclustPH', simplist)
+}
+

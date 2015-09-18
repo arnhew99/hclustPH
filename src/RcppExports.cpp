@@ -29,3 +29,14 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// topsimps
+IntegerVector topsimps(List simplist);
+RcppExport SEXP hclustPH_topsimps(SEXP simplistSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< List >::type simplist(simplistSEXP);
+    __result = Rcpp::wrap(topsimps(simplist));
+    return __result;
+END_RCPP
+}

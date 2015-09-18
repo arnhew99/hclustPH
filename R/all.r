@@ -43,21 +43,9 @@ hclustPH <- function(Z) {
 	# The order of the edges matters, which is why we sorted by birth time.
 
 	### REDUCTION ###
-	top <- function(vec) {
-		if (is.na(vec[1])) -1 else max(vec)
-	}
-
 	
 	# initialise
-	top.simplexes <- unlist(lapply(simplices,top))
-	
-	
-	# # add two vectors together mod 2
-	# add.simplices <- function(x,y) {
-		# c(x,y)[!c(match(x,y,0L),match(y,x,0L))]
-	# }
-	
-	
+	top.simplexes <- topsimps(simplices)
 	
 	dups <- duplicated(top.simplexes,incomparables=-1)
 	indexvec <- 1:length(top.simplexes)
@@ -73,7 +61,7 @@ hclustPH <- function(Z) {
 		# put the solutions back in the correct place 
 		simplices[reps] <- replacement
 		
-		top.simplexes[reps] <- unlist(lapply(replacement, top))
+		top.simplexes[reps] <- topsimps(replacement)
 		dups <- duplicated(top.simplexes,incomparables=-1)
 	}
 	
