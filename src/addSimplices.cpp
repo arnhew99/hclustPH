@@ -7,11 +7,7 @@ IntegerVector addSimplices(IntegerVector x, IntegerVector y) {
 	int n = x.size();
 	int m = y.size();
 	
-	IntegerVector tmp(n+m);
-	
-	for (int i = 0; i< n+m; ++i) {
-		tmp[i] = 1;
-	}
+	IntegerVector tmp(n+m, 1);
 	
 	int count = n+m;
 	
