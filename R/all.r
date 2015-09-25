@@ -13,10 +13,13 @@ hclustPH <- function(Z) {
 	# delaunayn comes from the geometry package - uses the QHull algorithm and is
 	# well-behaved for sets of points in 8 dimensions or fewer...
 	triang <- delaunayn(Z, options="Qt Pp")
-	triang <- apply(triang,1,sort.int)
+	ntri <- dim(triang)[1]
+	triang <- matSort(triang, ntri, data.d+1)
 	
-	edges <- matrix(as.vector(apply(triang,2,function(x) combn(x,2))),ncol=2,byrow=TRUE)
-	edges <- unique(edges)
+	edges <- findEdges(triang, d=data.d+1, n=ntri)
+	
+	# find unique edges
+	edges <- edges[!duplicated(paste(edges[,1], edges[,2])),]
 	n.edges <- dim(edges)[1]
 	
 	
@@ -56,7 +59,8 @@ hclustPH <- function(Z) {
 		reps <- indexvec[dups]
 		
 		# solve the addition
-		replacement <- mapply(addSimplices,simplices[reps],simplices[adds],SIMPLIFY=FALSE)
+		# replacement <- mapply(addSimplices,simplices[reps],simplices[adds],SIMPLIFY=FALSE)
+		replacement <- addList(simplices[reps], simplices[adds])
 				
 		# put the solutions back in the correct place 
 		simplices[reps] <- replacement
@@ -97,7 +101,7 @@ hclustPH <- function(Z) {
 	
 	# compute the hierachical clustering "heights", which are the birth times of any 
 	# edge left in the reduced form
-	simplex.size <- sapply(simplices,length)
+	simplex.size <- unlist(lapply(simplices,length))
 	death <- which(simplex.size >= 1)
 	
 	

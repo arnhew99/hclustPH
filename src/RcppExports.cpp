@@ -5,6 +5,18 @@
 
 using namespace Rcpp;
 
+// addList
+List addList(List simplist_reps, List simplist_adds);
+RcppExport SEXP hclustPH_addList(SEXP simplist_repsSEXP, SEXP simplist_addsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< List >::type simplist_reps(simplist_repsSEXP);
+    Rcpp::traits::input_parameter< List >::type simplist_adds(simplist_addsSEXP);
+    __result = Rcpp::wrap(addList(simplist_reps, simplist_adds));
+    return __result;
+END_RCPP
+}
 // addSimplices
 IntegerVector addSimplices(IntegerVector x, IntegerVector y);
 RcppExport SEXP hclustPH_addSimplices(SEXP xSEXP, SEXP ySEXP) {
@@ -17,6 +29,19 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// findEdges
+IntegerMatrix findEdges(IntegerMatrix simps, int d, int n);
+RcppExport SEXP hclustPH_findEdges(SEXP simpsSEXP, SEXP dSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type simps(simpsSEXP);
+    Rcpp::traits::input_parameter< int >::type d(dSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    __result = Rcpp::wrap(findEdges(simps, d, n));
+    return __result;
+END_RCPP
+}
 // hclustIntermediate
 IntegerVector hclustIntermediate(IntegerVector l, IntegerVector r);
 RcppExport SEXP hclustPH_hclustIntermediate(SEXP lSEXP, SEXP rSEXP) {
@@ -26,6 +51,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type l(lSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type r(rSEXP);
     __result = Rcpp::wrap(hclustIntermediate(l, r));
+    return __result;
+END_RCPP
+}
+// matSort
+IntegerMatrix matSort(IntegerMatrix X, int n, int d);
+RcppExport SEXP hclustPH_matSort(SEXP XSEXP, SEXP nSEXP, SEXP dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type X(XSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type d(dSEXP);
+    __result = Rcpp::wrap(matSort(X, n, d));
     return __result;
 END_RCPP
 }
