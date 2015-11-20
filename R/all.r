@@ -19,7 +19,11 @@ hclustPH <- function(Z) {
 	edges <- findEdges(triang, d=data.d+1, n=ntri)
 	
 	# find unique edges
-	edges <- edges[!duplicated(paste(edges[,1], edges[,2])),]
+	# apparently this is faster
+	x <- edges[,1]
+	y <- edges[,2]
+	z <- paste(x,y)
+	edges <- edges[!duplicated(z),]
 	n.edges <- dim(edges)[1]
 	
 	
